@@ -7,10 +7,28 @@
 //
 
 #include <stdio.h>
+#include <math.h>
 
-int main(int argc, const char * argv[])
+typedef enum {
+    o_add, //+
+    o_subtract, //-
+    o_multiply, //*
+    o_divide, // '/'
+    o_left_parenthesis, // (
+    o_right_parenthesis // )
+} operator;
+
+typedef enum {
+    m_sin,
+    m_cos,
+    m_exp
+} math_function;
+
+const double pi = 3.14159;
+const double eil = 2.71828;
+
+int main()
 {
-    printf("Hello, World!\n");
     return 0;
 }
 
