@@ -33,7 +33,8 @@ typedef enum {
     sym_operator,
     sym_function,
     sym_constant,
-    sym_space
+    sym_space,
+    sym_digit
 } symbolType;
 
 #endif
