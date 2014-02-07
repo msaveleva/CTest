@@ -11,6 +11,6 @@
 #include "ConstsEnums.h"
 
 int make_number_from_digits(char *arr);
-symbolType detect_symbol_type (char *symbol);
+symbolType detect_symbol_type(char symbol);
 
 #endif

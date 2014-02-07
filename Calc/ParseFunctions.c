@@ -7,6 +7,7 @@
 //
 
 #include <stdio.h>
+#include <ctype.h>
 #include "ParseFunctions.h"
 
 //the last symbol of array with digits always must be '\n'
@@ -33,3 +34,19 @@ int make_number_from_digits(char *arr)
     return result;
 }
 
+symbolType detect_symbol_type(char symbol)
+{
+    if (isdigit(symbol)) {
+        return sym_digit;
+    } else {
+        if (isalpha(symbol)) {
+            return sym_function;
+        } else {
+            if (ispunct(symbol)) {
+                return sym_operator;
+            } else {
+                return sym_space;
+            }
+        }
+    }
+}
