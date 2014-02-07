@@ -1,5 +1,5 @@
 //
-//  main.c
+//  ParseFunctions.c
 //  Calc
 //
 //  Created by Maria Saveleva on 07/02/14.
@@ -7,15 +7,4 @@
 //
 
 #include <stdio.h>
-#include <math.h>
 #include "ParseFunctions.h"
-#include "ConstsEnums.h"
-
-const double pi = 3.14159;
-const double eil = 2.71828;
-
-int main()
-{
-    return 0;
-}
-

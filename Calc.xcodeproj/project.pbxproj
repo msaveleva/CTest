@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3F1B70AF18A4A511004AE4C9 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F1B70AE18A4A511004AE4C9 /* main.c */; };
 		3F1B70B118A4A511004AE4C9 /* Calc.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3F1B70B018A4A511004AE4C9 /* Calc.1 */; };
+		3F1B70B818A4BA84004AE4C9 /* ParseFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F1B70B718A4BA84004AE4C9 /* ParseFunctions.c */; };
+		3F1B70D418A4C471004AE4C9 /* ConstsEnums.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F1B70D318A4C471004AE4C9 /* ConstsEnums.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +30,10 @@
 		3F1B70AB18A4A510004AE4C9 /* Calc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Calc; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F1B70AE18A4A511004AE4C9 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		3F1B70B018A4A511004AE4C9 /* Calc.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Calc.1; sourceTree = "<group>"; };
+		3F1B70B718A4BA84004AE4C9 /* ParseFunctions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ParseFunctions.c; sourceTree = "<group>"; };
+		3F1B70B918A4BA8A004AE4C9 /* ParseFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseFunctions.h; sourceTree = "<group>"; };
+		3F1B70D218A4C46C004AE4C9 /* ConstsEnums.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConstsEnums.h; sourceTree = "<group>"; };
+		3F1B70D318A4C471004AE4C9 /* ConstsEnums.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ConstsEnums.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +67,10 @@
 			isa = PBXGroup;
 			children = (
 				3F1B70AE18A4A511004AE4C9 /* main.c */,
+				3F1B70B918A4BA8A004AE4C9 /* ParseFunctions.h */,
+				3F1B70B718A4BA84004AE4C9 /* ParseFunctions.c */,
+				3F1B70D218A4C46C004AE4C9 /* ConstsEnums.h */,
+				3F1B70D318A4C471004AE4C9 /* ConstsEnums.c */,
 				3F1B70B018A4A511004AE4C9 /* Calc.1 */,
 			);
 			path = Calc;
@@ -118,6 +128,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F1B70AF18A4A511004AE4C9 /* main.c in Sources */,
+				3F1B70D418A4C471004AE4C9 /* ConstsEnums.c in Sources */,
+				3F1B70B818A4BA84004AE4C9 /* ParseFunctions.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,6 +237,7 @@
 				3F1B70B618A4A511004AE4C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
