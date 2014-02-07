@@ -24,4 +24,16 @@ typedef enum {
     m_exp
 } math_function;
 
+typedef enum {
+    low,
+    high
+} priority;
+
+typedef enum {
+    sym_operator,
+    sym_function,
+    sym_constant,
+    sym_space
+} symbolType;
+
 #endif

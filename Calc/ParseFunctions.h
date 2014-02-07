@@ -8,10 +8,9 @@
 
 #ifndef Calc_ParseFunctions_h
 #define Calc_ParseFunctions_h
+#include "ConstsEnums.h"
 
-int is_operator (char* symbol);
-int is_const (char *symbol);
-int is_finction (char *symbol);
-int is_number (char *symbol);
+int make_number_from_digits(char *arr);
+symbolType detect_symbol_type (char *symbol);
 
 #endif
