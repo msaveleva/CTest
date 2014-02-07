@@ -11,6 +11,7 @@
 		3F1B70B118A4A511004AE4C9 /* Calc.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3F1B70B018A4A511004AE4C9 /* Calc.1 */; };
 		3F1B70B818A4BA84004AE4C9 /* ParseFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F1B70B718A4BA84004AE4C9 /* ParseFunctions.c */; };
 		3F1B70D418A4C471004AE4C9 /* ConstsEnums.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F1B70D318A4C471004AE4C9 /* ConstsEnums.c */; };
+		3F1B70D618A50D38004AE4C9 /* OperationStack.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F1B70D518A50D38004AE4C9 /* OperationStack.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +35,8 @@
 		3F1B70B918A4BA8A004AE4C9 /* ParseFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseFunctions.h; sourceTree = "<group>"; };
 		3F1B70D218A4C46C004AE4C9 /* ConstsEnums.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConstsEnums.h; sourceTree = "<group>"; };
 		3F1B70D318A4C471004AE4C9 /* ConstsEnums.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ConstsEnums.c; sourceTree = "<group>"; };
+		3F1B70D518A50D38004AE4C9 /* OperationStack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = OperationStack.c; sourceTree = "<group>"; };
+		3F1B70D718A50D3D004AE4C9 /* OperationStack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OperationStack.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +74,8 @@
 				3F1B70B718A4BA84004AE4C9 /* ParseFunctions.c */,
 				3F1B70D218A4C46C004AE4C9 /* ConstsEnums.h */,
 				3F1B70D318A4C471004AE4C9 /* ConstsEnums.c */,
+				3F1B70D718A50D3D004AE4C9 /* OperationStack.h */,
+				3F1B70D518A50D38004AE4C9 /* OperationStack.c */,
 				3F1B70B018A4A511004AE4C9 /* Calc.1 */,
 			);
 			path = Calc;
@@ -127,6 +132,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F1B70D618A50D38004AE4C9 /* OperationStack.c in Sources */,
 				3F1B70AF18A4A511004AE4C9 /* main.c in Sources */,
 				3F1B70D418A4C471004AE4C9 /* ConstsEnums.c in Sources */,
 				3F1B70B818A4BA84004AE4C9 /* ParseFunctions.c in Sources */,
