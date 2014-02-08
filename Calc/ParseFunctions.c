@@ -50,3 +50,16 @@ symbolType detect_symbol_type(char symbol)
         }
     }
 }
+
+priority detect_symbol_priority(char symbol)
+{
+    if (symbol == '+' || symbol == '-') {
+        return low;
+    } else {
+        if (symbol == '*' || symbol == '/') {
+            return normal;
+        } else {
+            return high;
+        }
+    }
+}

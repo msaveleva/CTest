@@ -12,5 +12,6 @@
 
 int make_number_from_digits(char *arr);
 symbolType detect_symbol_type(char symbol);
+priority detect_symbol_priority(char symbol);
 
 #endif
