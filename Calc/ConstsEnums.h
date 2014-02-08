@@ -9,9 +9,6 @@
 #ifndef Calc_ConstsEnums_h
 #define Calc_ConstsEnums_h
 
-
-extern const int kValue;
-
 extern const double kMPI;
 extern const double kME;
 
@@ -31,8 +28,9 @@ typedef enum {
 } math_function;
 
 typedef enum {
-    low,
-    high
+    low, //+ -
+    normal, //* /
+    high //sin, cons, exp
 } priority;
 
 typedef enum {

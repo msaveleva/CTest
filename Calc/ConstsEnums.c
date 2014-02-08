@@ -9,7 +9,5 @@
 #include <stdio.h>
 #include "ConstsEnums.h"
 
-const int kValue = 20.0;
-
- const double kMPI = 3.14159;
- const double kME = 2.71828;
+const double kMPI = 3.14159;
+const double kME = 2.71828;
