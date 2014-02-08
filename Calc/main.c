@@ -17,13 +17,13 @@ int main()
     char str[100];
     char output_queue[100];
     char stack[50];
-    char *stack_top = &stack[0];
     
     printf("Please enter an expression:\n");
     fgets(str, 100, stdin);
     
     int i = 0;
     int output_queue_cnt = 0;
+    int stack_cnt = 0;
     while (str[i] != '\n') {
         switch (detect_symbol_type(str[i])) {
             case sym_digit:
@@ -31,9 +31,17 @@ int main()
                 output_queue_cnt++;
                 break;
             case sym_operator:
-                
-
+                if (detect_symbol_priority(stack[stack_cnt - 1]) == normal) {
+                    output_queue[output_queue_cnt] = stack[stack_cnt-1];
+                    output_queue_cnt++;
+                    stack[stack_cnt-1] = str[i];
+                    stack_cnt--;
+                } else {
+                    stack[stack_cnt] = str[i];
+                    stack_cnt++;
+                }
                 break;
+                
             case sym_space:
                 break;
                 
@@ -44,6 +52,7 @@ int main()
         i++;
     }
     printf("Output: %s\n", output_queue);
+    printf("Stack: %s\n", stack);
     
     return 0;
 }
