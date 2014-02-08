@@ -35,7 +35,6 @@ int main()
                     output_queue[output_queue_cnt] = stack[stack_cnt-1];
                     output_queue_cnt++;
                     stack[stack_cnt-1] = str[i];
-                    stack_cnt--;
                 } else {
                     stack[stack_cnt] = str[i];
                     stack_cnt++;
@@ -51,6 +50,13 @@ int main()
         
         i++;
     }
+    
+    for (int j = stack_cnt - 1; j >= 0; j--) {
+        output_queue[output_queue_cnt] = stack[j];
+        output_queue_cnt++;
+    }
+    output_queue[output_queue_cnt] = '\n';
+
     printf("Output: %s\n", output_queue);
     printf("Stack: %s\n", stack);
     
