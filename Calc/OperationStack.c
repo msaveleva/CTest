@@ -7,6 +7,8 @@
 //
 
 #include <stdio.h>
+#include <stdlib.h>
+
 #include "OperationStack.h"
 
 void stack_init(o_Stack *stack, int max_size)

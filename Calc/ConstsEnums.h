@@ -9,6 +9,12 @@
 #ifndef Calc_ConstsEnums_h
 #define Calc_ConstsEnums_h
 
+
+extern const int kValue;
+
+extern const double kMPI;
+extern const double kME;
+
 typedef enum {
     o_add, //+
     o_subtract, //-
@@ -37,4 +43,4 @@ typedef enum {
     sym_digit
 } symbolType;
 
-#endif
+#endif /* Calc_ConstsEnums_h */
