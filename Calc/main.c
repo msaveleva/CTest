@@ -15,8 +15,8 @@
 int main()
 {
     char str[100];
-    char output_queue[100];
-    char stack[50];
+    double output_queue[100];
+    double stack[50];
     
     printf("Please enter an expression:\n");
     fgets(str, 100, stdin);
@@ -28,16 +28,16 @@ int main()
     while (str[i] != '\n') {
         switch (detect_symbol_type(str[i])) {
             case sym_digit:
-                output_queue[output_queue_cnt] = str[i] - '0'; //translate to int
+                output_queue[output_queue_cnt] = (double)(str[i] - '0');
                 output_queue_cnt++;
                 break;
             case sym_operator:
                 if (detect_symbol_priority(stack[stack_cnt - 1]) == normal) {
                     output_queue[output_queue_cnt] = stack[stack_cnt-1];
                     output_queue_cnt++;
-                    stack[stack_cnt-1] = str[i];
+                    stack[stack_cnt-1] = (double)str[i];
                 } else {
-                    stack[stack_cnt] = str[i];
+                    stack[stack_cnt] = (double)str[i];
                     stack_cnt++;
                 }
                 break;
@@ -58,27 +58,31 @@ int main()
     }
     output_queue[output_queue_cnt] = '\n';
     
-    printf("Output: %s", output_queue);
-    printf("Stack: %s\n", stack);
+//    printf("Output: %s", output_queue);
+//    printf("Stack: %s\n", stack);
     
     //calculate reverse polish notation
     while (output_queue[1] != '\n') {
         int k = 0;
         while (output_queue[k] != '\n') {
             if (detect_symbol_type(output_queue[k]) == sym_operator) {
-                int result = 0;
-                switch (output_queue[k]) {
+                double result = 0;
+                
+                double a = output_queue[k-2];
+                double b = output_queue[k-1];
+                
+                switch ((int)output_queue[k]) {
                     case '+':
-                        result = output_queue[k-2] + output_queue[k-1];
+                        result = a + b;
                         break;
                     case '-':
-                        result = output_queue[k-2] - output_queue[k-1];
+                        result = a - b;
                         break;
                     case '*':
-                        result = output_queue[k-2] * output_queue[k-1];
+                        result = a * b;
                         break;
                     case '/':
-                        result = output_queue[k-2] / output_queue[k-1];
+                        result = a / b;
                         break;
                         
                     default:
@@ -97,7 +101,7 @@ int main()
         }
     }
     
-    printf("Output: %d\n", output_queue[0]);
+    printf("Output: %f\n", output_queue[0]);
     
     return 0;
 }
