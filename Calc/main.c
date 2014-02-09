@@ -45,6 +45,15 @@ int main()
             case sym_space:
                 break;
                 
+            case sym_constant:
+                if (str[i] == 'P') {
+                    output_queue[output_queue_cnt] = kMPI;
+                }
+                if (str[i] == 'E') {
+                    output_queue[output_queue_cnt] = kME;
+                }
+                output_queue_cnt++;
+                
             default:
                 break;
         }

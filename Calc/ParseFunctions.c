@@ -40,7 +40,11 @@ symbolType detect_symbol_type(char symbol)
         return sym_digit;
     } else {
         if (isalpha(symbol)) {
-            return sym_function;
+            if (symbol == 'P' || symbol == 'E') {
+                return sym_constant;
+            } else {
+                return sym_function;
+            }
         } else {
             if (ispunct(symbol)) {
                 return sym_operator;
