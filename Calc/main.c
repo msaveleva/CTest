@@ -114,12 +114,14 @@ int main()
     printf("\nResult: %f\n", output_queue[0]);
     
     //transform from string to double
-//    char number[] = "415.25";
+//    char number[100];
+//    printf("Enter the number: \n");
+//    fgets(number, 100, stdin);
 //    double result = 0;
 //    sscanf(number, "%lf", &result);
 //    printf("Result: %lf", result);
     
-    parse_string("12+1\n");
+    parse_string("12+4");
     
     return 0;
 }

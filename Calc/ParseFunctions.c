@@ -27,6 +27,7 @@ char* parse_string(char *string)
         } else {
             if (detect_symbol_type(string[i]) == sym_operator) {
                 result_operators[operators_cnt] = string[i];
+                result_digits[digit_string][digits_cnt] = '\n';
                 operators_cnt++;
                 digit_string++;
                 digits_cnt = 0;
@@ -39,16 +40,18 @@ char* parse_string(char *string)
     double result_numbers[100];
     for (int i = 0; i <= digit_string; i++) {
         double result = 0;
-        sscanf(result_digits[digit_string], "%lf", &result);
+        sscanf(result_digits[i], "%lf", &result);
         result_numbers[i] = result;
-        printf("Result: %lf\n", result);
+        printf("Parse result: %lf\n", result);
     }
     
     int k = 0;
     for (int i = 0; i <= (digit_string + operators_cnt); i++) {
         result_string[i] = result_numbers[k];
+        printf("%lf", (double)result_string[i]);
         i++;
         result_string[i] = result_operators[k];
+        printf("%c",result_string[i]);
         k++;
     }
     
