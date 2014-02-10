@@ -121,7 +121,10 @@ int main()
 //    sscanf(number, "%lf", &result);
 //    printf("Result: %lf", result);
     
-    parse_string("12+4");
+    printf("Enter the expression: \n");
+    char expr[100];
+    fgets(expr, 100, stdin);
+    parse_string(expr);
     
     return 0;
 }

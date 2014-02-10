@@ -10,18 +10,18 @@
 #include <ctype.h>
 #include "ParseFunctions.h"
 
-char* parse_string(char *string)
+double* parse_string(char *string)
 {
     char result_digits[50][50];
     char result_operators[50];
-    static char result_string[100];
+    static double result_string[100];
     
     int i = 0;
     int digits_cnt = 0;
     int digit_string = 0;
     int operators_cnt = 0;
     while (string[i] != '\n') {
-        if (detect_symbol_type(string[i]) == sym_digit) {
+        if (detect_symbol_type(string[i]) == sym_digit || string[i] == '.') {
             result_digits[digit_string][digits_cnt] = string[i];
             digits_cnt++;
         } else {
@@ -48,10 +48,10 @@ char* parse_string(char *string)
     int k = 0;
     for (int i = 0; i <= (digit_string + operators_cnt); i++) {
         result_string[i] = result_numbers[k];
-        printf("%lf", (double)result_string[i]);
+        printf("%lf", result_string[i]);
         i++;
         result_string[i] = result_operators[k];
-        printf("%c",result_string[i]);
+        printf("%c", (char)result_string[i]);
         k++;
     }
     
