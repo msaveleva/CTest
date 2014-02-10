@@ -10,6 +10,51 @@
 #include <ctype.h>
 #include "ParseFunctions.h"
 
+char* parse_string(char *string)
+{
+    char result_digits[50][50];
+    char result_operators[50];
+    static char result_string[100];
+    
+    int i = 0;
+    int digits_cnt = 0;
+    int digit_string = 0;
+    int operators_cnt = 0;
+    while (string[i] != '\n') {
+        if (detect_symbol_type(string[i]) == sym_digit) {
+            result_digits[digit_string][digits_cnt] = string[i];
+            digits_cnt++;
+        } else {
+            if (detect_symbol_type(string[i]) == sym_operator) {
+                result_operators[operators_cnt] = string[i];
+                operators_cnt++;
+                digit_string++;
+                digits_cnt = 0;
+            }
+        }
+        i++;
+    }
+    result_operators[operators_cnt] = '\n';
+    
+    double result_numbers[100];
+    for (int i = 0; i <= digit_string; i++) {
+        double result = 0;
+        sscanf(result_digits[digit_string], "%lf", &result);
+        result_numbers[i] = result;
+        printf("Result: %lf\n", result);
+    }
+    
+    int k = 0;
+    for (int i = 0; i <= (digit_string + operators_cnt); i++) {
+        result_string[i] = result_numbers[k];
+        i++;
+        result_string[i] = result_operators[k];
+        k++;
+    }
+    
+    return result_string;
+}
+
 //the last symbol of array with digits always must be '\n'
 int make_number_from_digits(char *arr)
 {

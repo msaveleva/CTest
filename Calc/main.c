@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "string.h"
 #include <math.h>
 #include "ParseFunctions.h"
 #include "ConstsEnums.h"
@@ -110,7 +111,15 @@ int main()
         }
     }
     
-    printf("Output: %f\n", output_queue[0]);
+    printf("\nResult: %f\n", output_queue[0]);
+    
+    //transform from string to double
+//    char number[] = "415.25";
+//    double result = 0;
+//    sscanf(number, "%lf", &result);
+//    printf("Result: %lf", result);
+    
+    parse_string("12+1\n");
     
     return 0;
 }
