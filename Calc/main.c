@@ -22,23 +22,27 @@ int main()
     printf("Please enter an expression:\n");
     fgets(str, 100, stdin);
     
+    double *parsed_string = parse_string(str);
+    
+    printf("Operator: %lf", parsed_string[1]);
+    
     //make reverse polish notation
     int i = 0;
     int output_queue_cnt = 0;
     int stack_cnt = 0;
-    while (str[i] != '\n') {
-        switch (detect_symbol_type(str[i])) {
+    while (parsed_string[i] != '\n') {
+        switch (detect_symbol_type(parsed_string[i] + '0')) {
             case sym_digit:
-                output_queue[output_queue_cnt] = (double)(str[i] - '0');
+                output_queue[output_queue_cnt] = parsed_string[i];
                 output_queue_cnt++;
                 break;
             case sym_operator:
                 if (detect_symbol_priority(stack[stack_cnt - 1]) == normal) {
                     output_queue[output_queue_cnt] = stack[stack_cnt-1];
                     output_queue_cnt++;
-                    stack[stack_cnt-1] = (double)str[i];
+                    stack[stack_cnt-1] = parsed_string[i];
                 } else {
-                    stack[stack_cnt] = (double)str[i];
+                    stack[stack_cnt] = parsed_string[i];
                     stack_cnt++;
                 }
                 break;
@@ -46,14 +50,14 @@ int main()
             case sym_space:
                 break;
                 
-            case sym_constant:
-                if (str[i] == 'P') {
-                    output_queue[output_queue_cnt] = kMPI;
-                }
-                if (str[i] == 'E') {
-                    output_queue[output_queue_cnt] = kME;
-                }
-                output_queue_cnt++;
+//            case sym_constant:
+//                if (str[i] == 'P') {
+//                    output_queue[output_queue_cnt] = kMPI;
+//                }
+//                if (str[i] == 'E') {
+//                    output_queue[output_queue_cnt] = kME;
+//                }
+//                output_queue_cnt++;
                 
             default:
                 break;
@@ -121,11 +125,5 @@ int main()
 //    sscanf(number, "%lf", &result);
 //    printf("Result: %lf", result);
     
-    printf("Enter the expression: \n");
-    char expr[100];
-    fgets(expr, 100, stdin);
-    parse_string(expr);
-    
     return 0;
 }
-
