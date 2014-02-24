@@ -58,6 +58,9 @@ rpnData* parse_string(char *string)
         printf("%c", result_string[i].op);
         k++;
     }
+    result_string[i].type = sym_operator;
+    result_string[i].number = 0;
+    result_string[i].op = '\n';
     
     return result_string;
 }

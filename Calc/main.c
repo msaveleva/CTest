@@ -18,7 +18,6 @@ int main()
     char str[100];
     rpnData output_queue[100];
     rpnData stack[50];
-    int elementsNumber = 0;
     
     printf("Please enter an expression:\n");
     fgets(str, 100, stdin);
