@@ -16,8 +16,9 @@
 int main()
 {
     char str[100];
-    double output_queue[100];
-    char stack[50];
+    rpnData output_queue[100];
+    rpnData stack[50];
+    int elementsNumber = 0;
     
     printf("Please enter an expression:\n");
     fgets(str, 100, stdin);
@@ -27,10 +28,31 @@ int main()
 //    printf("Operator: %lf", parsed_string[1]);
     
     //make reverse polish notation
-//    int i = 0;
-//    int output_queue_cnt = 0;
-//    int stack_cnt = 0;
-//    while (parsed_string[i] != '\n') {
+    int i = 0;
+    int output_queue_cnt = 0;
+    int stack_cnt = 0;
+    while (parsed_string[i].op != '\n') {
+        switch (parsed_string[i].type) {
+            case sym_digit:
+                output_queue[output_queue_cnt] = parsed_string[i];
+                output_queue_cnt++;
+                break;
+            case sym_operator:
+                if (detect_symbol_priority(stack[stack_cnt-1].op) == normal) {
+                    output_queue[output_queue_cnt] = stack[stack_cnt-1];
+                    output_queue_cnt++;
+                    stack[stack_cnt-1] = parsed_string[i];
+                } else {
+                    stack[stack_cnt] = parsed_string[i];
+                    stack_cnt++;
+                }
+                
+            default:
+                break;
+        }
+        i++;
+    }
+        
 //        switch (detect_symbol_type(parsed_string[i] + '0')) {
 //            case sym_digit:
 //                output_queue[output_queue_cnt] = parsed_string[i];
@@ -76,54 +98,46 @@ int main()
 //    printf("Stack: %s\n", stack);
     
     //calculate reverse polish notation
-    while (output_queue[1] != '\n') {
-        int k = 0;
-        while (output_queue[k] != '\n') {
-            if (detect_symbol_type(output_queue[k]) == sym_operator) {
-                double result = 0;
-                
-                double a = output_queue[k-2];
-                double b = output_queue[k-1];
-                
-                switch ((int)output_queue[k]) {
-                    case '+':
-                        result = a + b;
-                        break;
-                    case '-':
-                        result = a - b;
-                        break;
-                    case '*':
-                        result = a * b;
-                        break;
-                    case '/':
-                        result = a / b;
-                        break;
-                        
-                    default:
-                        break;
-                }
-                output_queue[k-2] = result;
-                
-                int p = k-1;
-                while (output_queue[p] != '\n') {
-                    output_queue[p] = output_queue[p+2];
-                    p++;
-                }
-                output_queue[p] = '\n';
-            }
-            k++;
-        }
-    }
+//    while (output_queue[1] != '\n') {
+//        int k = 0;
+//        while (output_queue[k] != '\n') {
+//            if (detect_symbol_type(output_queue[k]) == sym_operator) {
+//                double result = 0;
+//                
+//                double a = output_queue[k-2];
+//                double b = output_queue[k-1];
+//                
+//                switch ((int)output_queue[k]) {
+//                    case '+':
+//                        result = a + b;
+//                        break;
+//                    case '-':
+//                        result = a - b;
+//                        break;
+//                    case '*':
+//                        result = a * b;
+//                        break;
+//                    case '/':
+//                        result = a / b;
+//                        break;
+//                        
+//                    default:
+//                        break;
+//                }
+//                output_queue[k-2] = result;
+//                
+//                int p = k-1;
+//                while (output_queue[p] != '\n') {
+//                    output_queue[p] = output_queue[p+2];
+//                    p++;
+//                }
+//                output_queue[p] = '\n';
+//            }
+//            k++;
+//        }
+//    }
     
-    printf("\nResult: %f\n", output_queue[0]);
-    
-    //transform from string to double
-//    char number[100];
-//    printf("Enter the number: \n");
-//    fgets(number, 100, stdin);
-//    double result = 0;
-//    sscanf(number, "%lf", &result);
-//    printf("Result: %lf", result);
+//    printf("\nResult: %f\n", output_queue[0]);
     
     return 0;
 }
