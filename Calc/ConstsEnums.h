@@ -41,4 +41,12 @@ typedef enum {
     sym_digit
 } symbolType;
 
+typedef struct {
+    symbolType type;
+    union {
+        double number;
+        char op; //operator
+    };
+} rpnData;
+
 #endif /* Calc_ConstsEnums_h */
