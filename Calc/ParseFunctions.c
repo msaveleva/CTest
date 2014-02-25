@@ -48,18 +48,15 @@ rpnData* parse_string(char *string)
     int k = 0;
     for (int i = 0; i <= (digit_string + operators_cnt); i++) {
         result_string[i].number = result_numbers[k];
-        result_string[i].op = '0';
         result_string[i].type = sym_digit;
         printf("%lf", result_string[i].number);
         i++;
         result_string[i].op = result_operators[k];
-        result_string[i].number = 0;
         result_string[i].type = sym_operator;
         printf("%c", result_string[i].op);
         k++;
     }
     result_string[i].type = sym_operator;
-    result_string[i].number = 0;
     result_string[i].op = '\n';
     
     return result_string;

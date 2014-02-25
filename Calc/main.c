@@ -24,8 +24,6 @@ int main()
     
     rpnData *parsed_string = parse_string(str);
     
-//    printf("Operator: %lf", parsed_string[1]);
-    
     //make reverse polish notation
     int i = 0;
     int output_queue_cnt = 0;
@@ -51,50 +49,21 @@ int main()
         }
         i++;
     }
-        
-//        switch (detect_symbol_type(parsed_string[i] + '0')) {
-//            case sym_digit:
-//                output_queue[output_queue_cnt] = parsed_string[i];
-//                output_queue_cnt++;
-//                break;
-//            case sym_operator:
-//                if (detect_symbol_priority(stack[stack_cnt - 1]) == normal) {
-//                    output_queue[output_queue_cnt] = stack[stack_cnt-1];
-//                    output_queue_cnt++;
-//                    stack[stack_cnt-1] = parsed_string[i];
-//                } else {
-//                    stack[stack_cnt] = parsed_string[i];
-//                    stack_cnt++;
-//                }
-//                break;
-//                
-//            case sym_space:
-//                break;
-//                
-////            case sym_constant:
-////                if (str[i] == 'P') {
-////                    output_queue[output_queue_cnt] = kMPI;
-////                }
-////                if (str[i] == 'E') {
-////                    output_queue[output_queue_cnt] = kME;
-////                }
-////                output_queue_cnt++;
-//                
-//            default:
-//                break;
-//        }
-//        
-//        i++;
-//    }
     
-//    for (int j = stack_cnt - 1; j >= 0; j--) {
-//        output_queue[output_queue_cnt] = stack[j];
-//        output_queue_cnt++;
-//    }
-//    output_queue[output_queue_cnt] = '\n';
+    for (int j = stack_cnt - 1; j >= 0; j--) {
+        output_queue[output_queue_cnt] = stack[j];
+        output_queue_cnt++;
+    }
+    output_queue[output_queue_cnt].op = '\n';
+    output_queue[output_queue_cnt].type = sym_operator;
     
-//    printf("Output: %s", output_queue);
-//    printf("Stack: %s\n", stack);
+    for (int z = 0; z < output_queue_cnt; z++) {
+        if (output_queue[z].type == sym_digit) {
+            printf("%lf", output_queue[z].number);
+        } else {
+            printf("%c", output_queue[z].op);
+        }
+    }
     
     //calculate reverse polish notation
 //    while (output_queue[1] != '\n') {
