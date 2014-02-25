@@ -10,28 +10,56 @@
 #include <ctype.h>
 #include "ParseFunctions.h"
 
-//the last symbol of array with digits always must be '\n'
-int make_number_from_digits(char *arr)
+rpnData* parse_string(char *string)
 {
-    int arrCounter = 0;
-    for (int i = 0; i < 100; i++) {
-        if (arr[i] != '\n') {
-            arrCounter++;
+    char result_digits[50][50];
+    char result_operators[50];
+    static rpnData result_string[100];
+
+    int i = 0;
+    int digits_cnt = 0;
+    int digit_string = 0;
+    int operators_cnt = 0;
+    while (string[i] != '\n') {
+        if (detect_symbol_type(string[i]) == sym_digit || string[i] == '.') {
+            result_digits[digit_string][digits_cnt] = string[i];
+            digits_cnt++;
         } else {
-            break;
+            if (detect_symbol_type(string[i]) == sym_operator) {
+                result_operators[operators_cnt] = string[i];
+                result_digits[digit_string][digits_cnt] = '\n';
+                operators_cnt++;
+                digit_string++;
+                digits_cnt = 0;
+            }
         }
+        i++;
+    }
+    result_operators[operators_cnt] = '\n';
+    
+    double result_numbers[100];
+    for (int i = 0; i <= digit_string; i++) {
+        double result = 0;
+        sscanf(result_digits[i], "%lf", &result);
+        result_numbers[i] = result;
+        printf("Parse result: %lf\n", result);
     }
     
-    int result = 0;
-    int multiplier = 1;
-    for (int i = (arrCounter - 1); i >=0; i--) {
-        int number = arr[i] - '0';
-        result = result + number * multiplier;
-        multiplier *= 10;
+    int k = 0;
+    for (int i = 0; i <= (digit_string + operators_cnt); i++) {
+        result_string[i].number = result_numbers[k];
+        result_string[i].type = sym_digit;
+        printf("%lf", result_string[i].number);
+        i++;
+        result_string[i].op = result_operators[k];
+        result_string[i].type = sym_operator;
+        printf("%c", result_string[i].op);
+        k++;
     }
+    result_string[i].type = sym_operator;
+    result_string[i].op = '\n';
     
-    printf("make_number_from_digits result: %d\n", result);
-    return result;
+    return result_string;
 }
 
 symbolType detect_symbol_type(char symbol)
