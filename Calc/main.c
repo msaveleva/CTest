@@ -66,46 +66,49 @@ int main()
     }
     
     //calculate reverse polish notation
-//    while (output_queue[1] != '\n') {
-//        int k = 0;
-//        while (output_queue[k] != '\n') {
-//            if (detect_symbol_type(output_queue[k]) == sym_operator) {
-//                double result = 0;
-//                
-//                double a = output_queue[k-2];
-//                double b = output_queue[k-1];
-//                
-//                switch ((int)output_queue[k]) {
-//                    case '+':
-//                        result = a + b;
-//                        break;
-//                    case '-':
-//                        result = a - b;
-//                        break;
-//                    case '*':
-//                        result = a * b;
-//                        break;
-//                    case '/':
-//                        result = a / b;
-//                        break;
-//                        
-//                    default:
-//                        break;
-//                }
-//                output_queue[k-2] = result;
-//                
-//                int p = k-1;
-//                while (output_queue[p] != '\n') {
-//                    output_queue[p] = output_queue[p+2];
-//                    p++;
-//                }
-//                output_queue[p] = '\n';
-//            }
-//            k++;
-//        }
-//    }
+    while (output_queue[1].type != sym_operator) {
+        int k = 0;
+        while (output_queue[k].op != '\n') {
+            if (output_queue[k].type == sym_operator) {
+                double result = 0;
+                
+                double a = output_queue[k-2].number;
+                double b = output_queue[k-1].number;
+                
+                switch (output_queue[k].op) {
+                    case '+':
+                        result = a + b;
+                        break;
+                    case '-':
+                        result = a - b;
+                        break;
+                    case '*':
+                        result = a * b;
+                        break;
+                    case '/':
+                        result = a / b;
+                        break;
+                        
+                    default:
+                        break;
+                }
+                output_queue[k-2].number = result;
+                
+                int p = k-1;
+                while (output_queue[p].op != '\n') {
+                    if (output_queue[p+1].op == '\n') {
+                        break;
+                    }
+                    output_queue[p] = output_queue[p+2];
+                    p++;
+                }
+                output_queue[p].op = '\n';
+            }
+            k++;
+        }
+    }
     
-//    printf("\nResult: %f\n", output_queue[0]);
+    printf("\nResult: %f\n", output_queue[0].number);
     
     return 0;
 }
