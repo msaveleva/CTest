@@ -34,23 +34,38 @@ rpnData* parse_string(char *string)
                 digits_cnt = 0;
             } else {
                 if (detect_symbol_type(string[i]) == sym_constant) {
-                    if (is_Pi(string, i)) {
-                        result_numbers[digit_string] = kMPI;
-                        i++;
-                    } else {
-                        printf("Can't read %c%c", string[i], string[i+1]);
-                        //TODO: return 0000 array
+                    textType type = parse_consts_and_functions(string, i);
+                    switch (type) {
+                        case const_pi:
+                            result_numbers[digit_string] = kMPI;
+                            break;
+                        case const_eil:
+                            result_numbers[digit_string] = kME;
+                            break;
+                        case func_sin:
+                            
+                            break;
+                        case func_cos:
+                            
+                            break;
+                        case func_exp:
+                            
+                            break;
+                            
+                        default:
+                            break;
                     }
                 }
             }
         }
         i++;
     }
+    
     result_operators[operators_cnt] = '\n';
     
     for (int i = 0; i <= digit_string; i++) {
         
-        if (result_numbers[i] == kMPI) {
+        if (result_numbers[i] == kMPI || result_numbers[i] == kME) {
             continue;
         }
         
@@ -83,11 +98,7 @@ symbolType detect_symbol_type(char symbol)
         return sym_digit;
     } else {
         if (isalpha(symbol)) {
-            if (symbol == 'P' || symbol == 'E') {
-                return sym_constant;
-            } else {
-                return sym_function;
-            }
+            return sym_constant;
         } else {
             if (ispunct(symbol)) {
                 return sym_operator;
@@ -111,11 +122,15 @@ priority detect_symbol_priority(char symbol)
     }
 }
 
-int is_Pi(char *arr, int cnt)
+textType parse_consts_and_functions(char *string, int cnt)
 {
-    if (arr[0] == 'P' && arr[1] == 'i') {
-        return 1;
-    } else {
-        return 0;
+    if (string[cnt] == 'P' && string[cnt+1] == 'i') {
+        return const_pi;
     }
+    
+    if (string[cnt] == 'E') {
+        return const_eil;
+    }
+    
+    return can_not_read;
 }
