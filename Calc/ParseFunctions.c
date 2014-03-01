@@ -161,7 +161,7 @@ priority detect_symbol_priority(char symbol)
 
 textType parse_consts_and_functions(char *string, int cnt)
 {
-    if (string[cnt] == 'P' && string[cnt+1] == 'i') {
+    if (string[cnt] == 'P' && string[cnt+1] == 'I') {
         return const_pi;
     }
     
