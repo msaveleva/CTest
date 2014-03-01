@@ -15,6 +15,7 @@ rpnData* parse_string(char *string)
     char result_digits[50][50];
     char result_operators[50];
     static rpnData result_string[100];
+    double result_numbers[100];
 
     int i = 0;
     int digits_cnt = 0;
@@ -31,14 +32,28 @@ rpnData* parse_string(char *string)
                 operators_cnt++;
                 digit_string++;
                 digits_cnt = 0;
+            } else {
+                if (detect_symbol_type(string[i]) == sym_constant) {
+                    if (is_Pi(string, i)) {
+                        result_numbers[digit_string] = 3.14159;
+                        i++;
+                    } else {
+                        printf("Can't read %c%c", string[i], string[i+1]);
+                        //TODO: return 0000 array
+                    }
+                }
             }
         }
         i++;
     }
     result_operators[operators_cnt] = '\n';
     
-    double result_numbers[100];
     for (int i = 0; i <= digit_string; i++) {
+        
+        if (result_numbers[i] == 3.14159) {
+            continue;
+        }
+        
         double result = 0;
         sscanf(result_digits[i], "%lf", &result);
         result_numbers[i] = result;
@@ -93,5 +108,14 @@ priority detect_symbol_priority(char symbol)
         } else {
             return high;
         }
+    }
+}
+
+int is_Pi(char *arr, int cnt)
+{
+    if (arr[0] == 'P' && arr[1] == 'i') {
+        return 1;
+    } else {
+        return 0;
     }
 }
