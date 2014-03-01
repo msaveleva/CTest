@@ -35,7 +35,7 @@ rpnData* parse_string(char *string)
             } else {
                 if (detect_symbol_type(string[i]) == sym_constant) {
                     if (is_Pi(string, i)) {
-                        result_numbers[digit_string] = 3.14159;
+                        result_numbers[digit_string] = kMPI;
                         i++;
                     } else {
                         printf("Can't read %c%c", string[i], string[i+1]);
@@ -50,7 +50,7 @@ rpnData* parse_string(char *string)
     
     for (int i = 0; i <= digit_string; i++) {
         
-        if (result_numbers[i] == 3.14159) {
+        if (result_numbers[i] == kMPI) {
             continue;
         }
         
