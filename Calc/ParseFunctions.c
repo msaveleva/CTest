@@ -28,10 +28,12 @@ rpnData* parse_string(char *string)
         } else {
             if (detect_symbol_type(string[i]) == sym_operator) {
                 result_operators[operators_cnt] = string[i];
-                result_digits[digit_string][digits_cnt] = '\n';
                 operators_cnt++;
-                digit_string++;
-                digits_cnt = 0;
+                if (string[i] != '(' && string[i] != ')') {
+                    result_digits[digit_string][digits_cnt] = '\n';
+                    digit_string++;
+                    digits_cnt = 0;
+                }
             } else {
                 if (detect_symbol_type(string[i]) == sym_constant) {
                     textType type = parse_consts_and_functions(string, i);
@@ -81,16 +83,46 @@ rpnData* parse_string(char *string)
     int num_cnt = 0;
     int op_cnt = 0;
     for (int i = 0; i <= (digit_string + operators_cnt); i++) {
+        if (result_operators[op_cnt] == 's' || result_operators[op_cnt] == 'c' || result_operators[op_cnt] == 'e') {
+            result_string[i].op = result_operators[op_cnt];
+            result_string[i].type = sym_function;
+            printf("%c", result_string[i].op);
+            i++;
+            op_cnt++;
+            result_string[i].op = result_operators[op_cnt];
+            result_string[i].type = sym_operator;
+            printf("%c", result_string[i].op);
+            i++;
+            op_cnt++;
+            continue;
+        }
+        
         result_string[i].number = result_numbers[num_cnt];
         result_string[i].type = sym_digit;
         printf("%lf", result_string[i].number);
         i++;
+        num_cnt++;
+        
+        if (result_operators[op_cnt] == ')') {
+            result_string[i].op = result_operators[op_cnt];
+            printf("%c", result_string[i].op);
+            i++;
+            op_cnt++;
+        }
+        
         result_string[i].op = result_operators[op_cnt];
         result_string[i].type = sym_operator;
         printf("%c", result_string[i].op);
-        num_cnt++;
         op_cnt++;
+        
+        if (result_operators[op_cnt] == '(') {
+            i++;
+            result_string[i].op = result_operators[op_cnt];
+            printf("%c", result_string[i].op);
+            op_cnt++;
+        }
     }
+    
     result_string[i].type = sym_operator;
     result_string[i].op = '\n';
     
