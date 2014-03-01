@@ -41,6 +41,15 @@ typedef enum {
     sym_digit
 } symbolType;
 
+typedef enum {
+    const_eil,
+    const_pi,
+    func_cos,
+    func_sin,
+    func_exp,
+    can_not_read
+} textType;
+
 typedef struct {
     symbolType type;
     union {
