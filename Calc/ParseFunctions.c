@@ -92,7 +92,6 @@ rpnData* parse_string(char *string)
             result_string[i].op = result_operators[op_cnt];
             result_string[i].type = sym_operator;
             printf("%c", result_string[i].op);
-            i++;
             op_cnt++;
             continue;
         }
