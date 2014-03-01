@@ -43,13 +43,16 @@ rpnData* parse_string(char *string)
                             result_numbers[digit_string] = kME;
                             break;
                         case func_sin:
-                            
+                            result_operators[operators_cnt] = 's';
+                            operators_cnt++;
                             break;
                         case func_cos:
-                            
+                            result_operators[operators_cnt] = 'c';
+                            operators_cnt++;
                             break;
                         case func_exp:
-                            
+                            result_operators[operators_cnt] = 'e';
+                            operators_cnt++;
                             break;
                             
                         default:
@@ -77,14 +80,16 @@ rpnData* parse_string(char *string)
     
     int k = 0;
     for (int i = 0; i <= (digit_string + operators_cnt); i++) {
-        result_string[i].number = result_numbers[k];
-        result_string[i].type = sym_digit;
-        printf("%lf", result_string[i].number);
-        i++;
-        result_string[i].op = result_operators[k];
-        result_string[i].type = sym_operator;
-        printf("%c", result_string[i].op);
-        k++;
+        if (result_operators[i] != 's' || result_operators[i] != 'c' || result_operators[i] != 'e') {
+            result_string[i].number = result_numbers[k];
+            result_string[i].type = sym_digit;
+            printf("%lf", result_string[i].number);
+            i++;
+            result_string[i].op = result_operators[k];
+            result_string[i].type = sym_operator;
+            printf("%c", result_string[i].op);
+            k++;
+        }   
     }
     result_string[i].type = sym_operator;
     result_string[i].op = '\n';
@@ -130,6 +135,18 @@ textType parse_consts_and_functions(char *string, int cnt)
     
     if (string[cnt] == 'E') {
         return const_eil;
+    }
+    
+    if (string[cnt] == 's' && string[cnt+1] == 'i' && string[cnt+2] == 'n') {
+        return func_sin;
+    }
+    
+    if (string[cnt] == 'c' && string[cnt+1] == 'o' && string[cnt+2] == 's') {
+        return func_cos;
+    }
+    
+    if (string[cnt] == 'e' && string[cnt+1] == 'x' && string[cnt+2] == 'p') {
+        return func_exp;
     }
     
     return can_not_read;
