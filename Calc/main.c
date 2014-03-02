@@ -16,6 +16,7 @@
 
 int main()
 {
+    bool is_cnt_incrased = false;
     char str[100];
     rpnData output_queue[100];
     rpnData stack[50];
@@ -36,19 +37,37 @@ int main()
                 output_queue_cnt++;
                 break;
             case sym_operator:
+                if (parsed_string[i].op == 's' || parsed_string[i].op == 'c' || parsed_string[i].op == 'e') {
+                    stack[stack_cnt] = parsed_string[i];
+                    stack_cnt++;
+                    is_cnt_incrased = true;
+                    break;
+                }
+                
                 if (parsed_string[i].op == '(') {
                     stack[stack_cnt] = parsed_string[i];
                     stack_cnt++;
+                    is_cnt_incrased = true;
                     break;
                 }
                 
                 if (parsed_string[i].op == ')') {
                     stack_cnt--;
                     while (stack[stack_cnt].op != '(') {
-                        output_queue[output_queue_cnt].op = stack[stack_cnt].op;
-                        output_queue[output_queue_cnt].type = sym_operator;
+                        output_queue[output_queue_cnt] = stack[stack_cnt];
                         output_queue_cnt++;
                         stack_cnt--;
+                        is_cnt_incrased = false;
+                    }
+                    
+                    if (stack[stack_cnt-1].op == 's' || stack[stack_cnt-1].op == 'c' || stack[stack_cnt-1].op == 'e') {
+                        stack_cnt--;
+                        output_queue[output_queue_cnt] = stack[stack_cnt];
+                        output_queue_cnt++;
+                        if (stack_cnt !=0) {
+                            stack_cnt--;
+                            is_cnt_incrased = false;
+                        }
                     }
                 } else {
                     if (detect_symbol_priority(stack[stack_cnt-1].op) == normal) {
@@ -58,6 +77,7 @@ int main()
                     } else {
                         stack[stack_cnt] = parsed_string[i];
                         stack_cnt++;
+                        is_cnt_incrased = true;
                     }
                 }
                 
@@ -67,7 +87,12 @@ int main()
         i++;
     }
     
-    for (int j = stack_cnt - 1; j >= 0; j--) {
+    int addition = 0;
+    if (is_cnt_incrased) {
+        addition = 1;
+    }
+    
+    for (int j = stack_cnt - addition; j >= 0; j--) {
         output_queue[output_queue_cnt] = stack[j];
         output_queue_cnt++;
     }
