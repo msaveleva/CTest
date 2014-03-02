@@ -46,7 +46,6 @@ int main()
                 }
                 
                 if (parsed_string[i].op == ')') {
-//                    stack_pop(&stack);
                     while (stack.contents[stack.top].op != '(') {
                         output_queue[output_queue_cnt] = stack_pop(&stack);
                         output_queue_cnt++;
@@ -54,7 +53,6 @@ int main()
                     stack_pop(&stack);
                     
                     if (stack.contents[stack.top].op == 's' || stack.contents[stack.top].op == 'c' || stack.contents[stack.top].op == 'e') {
-                        stack_pop(&stack);
                         output_queue[output_queue_cnt] = stack_pop(&stack);
                         output_queue_cnt++;
                     }
