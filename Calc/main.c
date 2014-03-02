@@ -46,13 +46,14 @@ int main()
                 }
                 
                 if (parsed_string[i].op == ')') {
-                    stack_pop(&stack);
-                    while (stack.contents->op != '(') {
+//                    stack_pop(&stack);
+                    while (stack.contents[stack.top].op != '(') {
                         output_queue[output_queue_cnt] = stack_pop(&stack);
                         output_queue_cnt++;
                     }
+                    stack_pop(&stack);
                     
-                    if (stack.contents->op == 's' || stack.contents->op == 'c' || stack.contents->op == 'e') {
+                    if (stack.contents[stack.top].op == 's' || stack.contents[stack.top].op == 'c' || stack.contents[stack.top].op == 'e') {
                         stack_pop(&stack);
                         output_queue[output_queue_cnt] = stack_pop(&stack);
                         output_queue_cnt++;
@@ -75,7 +76,7 @@ int main()
         i++;
     }
     
-    for (int j = stack.top; j >= 0; j--) {
+    for (int j = stack.top; j > 0; j--) {
         output_queue[output_queue_cnt] = stack_pop(&stack);
         output_queue_cnt++;
     }
