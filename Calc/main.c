@@ -132,6 +132,7 @@ int main()
                     output_queue[p] = output_queue[p+2];
                     p++;
                 }
+                k = k-2;
                 output_queue[p].op = '\n';
             } else if (output_queue[k].type == sym_function) {
                 double result = 0;
@@ -154,10 +155,12 @@ int main()
                 output_queue[k-1].number = result;
                 
                 //replace array number with result
-                while (output_queue[k].op != '\n') {
-                    output_queue[k] = output_queue[k+1];
-                    k++;
+                int tmp = k;
+                while (output_queue[tmp].op != '\n') {
+                    output_queue[tmp] = output_queue[tmp+1];
+                    tmp++;
                 }
+                k--;
             }
             k++;
         }
