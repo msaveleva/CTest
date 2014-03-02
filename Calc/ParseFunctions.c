@@ -104,6 +104,7 @@ rpnData* parse_string(char *string)
         
         if (result_operators[op_cnt] == ')') {
             result_string[i].op = result_operators[op_cnt];
+            result_string[i].type = sym_operator;
             printf("%c", result_string[i].op);
             i++;
             op_cnt++;
@@ -117,6 +118,7 @@ rpnData* parse_string(char *string)
         if (result_operators[op_cnt] == '(') {
             i++;
             result_string[i].op = result_operators[op_cnt];
+            result_string[i].type = sym_operator;
             printf("%c", result_string[i].op);
             op_cnt++;
         }

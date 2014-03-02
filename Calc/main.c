@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include "string.h"
 #include <math.h>
+#include <stdbool.h>
 #include "ParseFunctions.h"
 #include "ConstsEnums.h"
 
@@ -35,13 +36,29 @@ int main()
                 output_queue_cnt++;
                 break;
             case sym_operator:
-                if (detect_symbol_priority(stack[stack_cnt-1].op) == normal) {
-                    output_queue[output_queue_cnt] = stack[stack_cnt-1];
-                    output_queue_cnt++;
-                    stack[stack_cnt-1] = parsed_string[i];
-                } else {
+                if (parsed_string[i].op == '(') {
                     stack[stack_cnt] = parsed_string[i];
                     stack_cnt++;
+                    break;
+                }
+                
+                if (parsed_string[i].op == ')') {
+                    stack_cnt--;
+                    while (stack[stack_cnt].op != '(') {
+                        output_queue[output_queue_cnt].op = stack[stack_cnt].op;
+                        output_queue[output_queue_cnt].type = sym_operator;
+                        output_queue_cnt++;
+                        stack_cnt--;
+                    }
+                } else {
+                    if (detect_symbol_priority(stack[stack_cnt-1].op) == normal) {
+                        output_queue[output_queue_cnt] = stack[stack_cnt-1];
+                        output_queue_cnt++;
+                        stack[stack_cnt-1] = parsed_string[i];
+                    } else {
+                        stack[stack_cnt] = parsed_string[i];
+                        stack_cnt++;
+                    }
                 }
                 
             default:
@@ -54,6 +71,7 @@ int main()
         output_queue[output_queue_cnt] = stack[j];
         output_queue_cnt++;
     }
+    
     output_queue[output_queue_cnt].op = '\n';
     output_queue[output_queue_cnt].type = sym_operator;
     
