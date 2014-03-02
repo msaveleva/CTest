@@ -8,17 +8,16 @@
 
 #ifndef Calc_OperationStack_h
 #define Calc_OperationStack_h
+#include "ConstsEnums.h"
 
 typedef struct {
-    char *contents;
+    rpnData contents[50];
     int top;
     int max_size;
 } o_Stack;
 
-void stack_init(o_Stack *stack, int max_size);
-void stack_destroy(o_Stack *stack);
 int stack_is_empty(o_Stack *stack);
-void stack_push(o_Stack *stack, char symbol);
-char stack_pop(o_Stack *stack);
+void stack_push(o_Stack *stack, rpnData elem);
+rpnData stack_pop(o_Stack *stack);
 
 #endif

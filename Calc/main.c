@@ -10,16 +10,15 @@
 #include <stdlib.h>
 #include "string.h"
 #include <math.h>
-#include <stdbool.h>
 #include "ParseFunctions.h"
 #include "ConstsEnums.h"
+#include "OperationStack.h"
 
 int main()
 {
-    bool is_cnt_incrased = false;
     char str[100];
     rpnData output_queue[100];
-    rpnData stack[50];
+    o_Stack stack;
     
     printf("Please enter an expression:\n");
     fgets(str, 100, stdin);
@@ -29,7 +28,6 @@ int main()
     //make reverse polish notation
     int i = 0;
     int output_queue_cnt = 0;
-    int stack_cnt = 0;
     while (parsed_string[i].op != '\n') {
         switch (parsed_string[i].type) {
             case sym_digit:
@@ -38,45 +36,36 @@ int main()
                 break;
             case sym_operator:
                 if (parsed_string[i].op == 's' || parsed_string[i].op == 'c' || parsed_string[i].op == 'e') {
-                    stack[stack_cnt] = parsed_string[i];
-                    stack_cnt++;
-                    is_cnt_incrased = true;
+                    stack_push(&stack, parsed_string[i]);
                     break;
                 }
                 
                 if (parsed_string[i].op == '(') {
-                    stack[stack_cnt] = parsed_string[i];
-                    stack_cnt++;
-                    is_cnt_incrased = true;
+                    stack_push(&stack, parsed_string[i]);
                     break;
                 }
                 
                 if (parsed_string[i].op == ')') {
-                    stack_cnt--;
-                    while (stack[stack_cnt].op != '(') {
-                        output_queue[output_queue_cnt] = stack[stack_cnt];
+                    stack_pop(&stack);
+                    while (stack.contents->op != '(') {
+                        output_queue[output_queue_cnt] = stack_pop(&stack);
                         output_queue_cnt++;
-                        stack_cnt--;
                     }
                     
-                    if (stack[stack_cnt-1].op == 's' || stack[stack_cnt-1].op == 'c' || stack[stack_cnt-1].op == 'e') {
-                        stack_cnt--;
-                        output_queue[output_queue_cnt] = stack[stack_cnt];
+                    if (stack.contents->op == 's' || stack.contents->op == 'c' || stack.contents->op == 'e') {
+                        stack_pop(&stack);
+                        output_queue[output_queue_cnt] = stack_pop(&stack);
                         output_queue_cnt++;
-                        if (stack_cnt !=0) {
-                            stack_cnt--;
-                            is_cnt_incrased = false;
-                        }
                     }
                 } else {
-                    if (detect_symbol_priority(stack[stack_cnt-1].op) == normal) {
-                        output_queue[output_queue_cnt] = stack[stack_cnt-1];
+                    rpnData last_stack_element = stack_pop(&stack);
+                    if (detect_symbol_priority(last_stack_element.op) == normal) {
+                        output_queue[output_queue_cnt] = last_stack_element;
                         output_queue_cnt++;
-                        stack[stack_cnt-1] = parsed_string[i];
+                        stack_push(&stack, parsed_string[i]);
                     } else {
-                        stack[stack_cnt] = parsed_string[i];
-                        stack_cnt++;
-                        is_cnt_incrased = true;
+                        stack_push(&stack, last_stack_element);
+                        stack_push(&stack, parsed_string[i]);
                     }
                 }
                 
@@ -86,13 +75,8 @@ int main()
         i++;
     }
     
-    int addition = 0;
-    if (is_cnt_incrased) {
-        addition = 1;
-    }
-    
-    for (int j = stack_cnt - addition; j >= 0; j--) {
-        output_queue[output_queue_cnt] = stack[j];
+    for (int j = stack.top; j >= 0; j--) {
+        output_queue[output_queue_cnt] = stack_pop(&stack);
         output_queue_cnt++;
     }
     
@@ -108,49 +92,49 @@ int main()
     }
     
     //calculate reverse polish notation
-    while (output_queue[1].type != sym_operator) {
-        int k = 0;
-        while (output_queue[k].op != '\n') {
-            if (output_queue[k].type == sym_operator) {
-                double result = 0;
-                
-                double a = output_queue[k-2].number;
-                double b = output_queue[k-1].number;
-                
-                switch (output_queue[k].op) {
-                    case '+':
-                        result = a + b;
-                        break;
-                    case '-':
-                        result = a - b;
-                        break;
-                    case '*':
-                        result = a * b;
-                        break;
-                    case '/':
-                        result = a / b;
-                        break;
-                        
-                    default:
-                        break;
-                }
-                output_queue[k-2].number = result;
-                
-                int p = k-1;
-                while (output_queue[p].op != '\n') {
-                    if (output_queue[p+1].op == '\n') {
-                        break;
-                    }
-                    output_queue[p] = output_queue[p+2];
-                    p++;
-                }
-                output_queue[p].op = '\n';
-            }
-            k++;
-        }
-    }
-    
-    printf("\nResult: %f\n", output_queue[0].number);
+//    while (output_queue[1].type != sym_operator) {
+//        int k = 0;
+//        while (output_queue[k].op != '\n') {
+//            if (output_queue[k].type == sym_operator) {
+//                double result = 0;
+//                
+//                double a = output_queue[k-2].number;
+//                double b = output_queue[k-1].number;
+//                
+//                switch (output_queue[k].op) {
+//                    case '+':
+//                        result = a + b;
+//                        break;
+//                    case '-':
+//                        result = a - b;
+//                        break;
+//                    case '*':
+//                        result = a * b;
+//                        break;
+//                    case '/':
+//                        result = a / b;
+//                        break;
+//                        
+//                    default:
+//                        break;
+//                }
+//                output_queue[k-2].number = result;
+//                
+//                int p = k-1;
+//                while (output_queue[p].op != '\n') {
+//                    if (output_queue[p+1].op == '\n') {
+//                        break;
+//                    }
+//                    output_queue[p] = output_queue[p+2];
+//                    p++;
+//                }
+//                output_queue[p].op = '\n';
+//            }
+//            k++;
+//        }
+//    }
+//    
+//    printf("\nResult: %f\n", output_queue[0].number);
     
     return 0;
 }
