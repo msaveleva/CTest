@@ -35,7 +35,9 @@ int main()
                 output_queue_cnt++;
                 break;
             case sym_operator:
-                if (parsed_string[i].op == 's' || parsed_string[i].op == 'c' || parsed_string[i].op == 'e') {
+                if (parsed_string[i].op == 's' ||
+                    parsed_string[i].op == 'c' ||
+                    parsed_string[i].op == 'e') {
                     stack_push(&stack, parsed_string[i]);
                     break;
                 }
@@ -52,8 +54,11 @@ int main()
                     }
                     stack_pop(&stack);
                     
-                    if (stack.contents[stack.top].op == 's' || stack.contents[stack.top].op == 'c' || stack.contents[stack.top].op == 'e') {
+                    if (stack.contents[stack.top].op == 's' ||
+                        stack.contents[stack.top].op == 'c' ||
+                        stack.contents[stack.top].op == 'e') {
                         output_queue[output_queue_cnt] = stack_pop(&stack);
+                        output_queue[output_queue_cnt].type = sym_function;
                         output_queue_cnt++;
                     }
                 } else {
@@ -91,49 +96,74 @@ int main()
     }
     
     //calculate reverse polish notation
-//    while (output_queue[1].type != sym_operator) {
-//        int k = 0;
-//        while (output_queue[k].op != '\n') {
-//            if (output_queue[k].type == sym_operator) {
-//                double result = 0;
-//                
-//                double a = output_queue[k-2].number;
-//                double b = output_queue[k-1].number;
-//                
-//                switch (output_queue[k].op) {
-//                    case '+':
-//                        result = a + b;
-//                        break;
-//                    case '-':
-//                        result = a - b;
-//                        break;
-//                    case '*':
-//                        result = a * b;
-//                        break;
-//                    case '/':
-//                        result = a / b;
-//                        break;
-//                        
-//                    default:
-//                        break;
-//                }
-//                output_queue[k-2].number = result;
-//                
-//                int p = k-1;
-//                while (output_queue[p].op != '\n') {
-//                    if (output_queue[p+1].op == '\n') {
-//                        break;
-//                    }
-//                    output_queue[p] = output_queue[p+2];
-//                    p++;
-//                }
-//                output_queue[p].op = '\n';
-//            }
-//            k++;
-//        }
-//    }
-//    
-//    printf("\nResult: %f\n", output_queue[0].number);
+    while (output_queue[1].type != sym_operator) {
+        int k = 0;
+        while (output_queue[k].op != '\n') {
+            if (output_queue[k].type == sym_operator) {
+                double result = 0;
+                
+                double a = output_queue[k-2].number;
+                double b = output_queue[k-1].number;
+                
+                switch (output_queue[k].op) {
+                    case '+':
+                        result = a + b;
+                        break;
+                    case '-':
+                        result = a - b;
+                        break;
+                    case '*':
+                        result = a * b;
+                        break;
+                    case '/':
+                        result = a / b;
+                        break;
+                        
+                    default:
+                        break;
+                }
+                output_queue[k-2].number = result;
+                
+                int p = k-1;
+                while (output_queue[p].op != '\n') {
+                    if (output_queue[p+1].op == '\n') {
+                        break;
+                    }
+                    output_queue[p] = output_queue[p+2];
+                    p++;
+                }
+                output_queue[p].op = '\n';
+            } else if (output_queue[k].type == sym_function) {
+                double result = 0;
+                double a = output_queue[k-1].number;
+                
+                switch (output_queue[k].op) {
+                    case 's':
+                        result = sin(a);
+                        break;
+                    case 'c':
+                        result = cos(a);
+                        break;
+                    case 'e':
+                        result = exp(a);
+                        break;
+                        
+                    default:
+                        break;
+                }
+                output_queue[k-1].number = result;
+                
+                //replace array number with result
+                while (output_queue[k].op != '\n') {
+                    output_queue[k] = output_queue[k+1];
+                    k++;
+                }
+            }
+            k++;
+        }
+    }
+    
+    printf("\nResult: %f\n", output_queue[0].number);
     
     return 0;
 }
