@@ -57,7 +57,6 @@ int main()
                         output_queue[output_queue_cnt] = stack[stack_cnt];
                         output_queue_cnt++;
                         stack_cnt--;
-                        is_cnt_incrased = false;
                     }
                     
                     if (stack[stack_cnt-1].op == 's' || stack[stack_cnt-1].op == 'c' || stack[stack_cnt-1].op == 'e') {
