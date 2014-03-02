@@ -12,12 +12,13 @@
 #include <math.h>
 #include "ParseFunctions.h"
 #include "ConstsEnums.h"
+#include "OperationStack.h"
 
 int main()
 {
     char str[100];
     rpnData output_queue[100];
-    rpnData stack[50];
+    o_Stack stack;
     
     printf("Please enter an expression:\n");
     fgets(str, 100, stdin);
@@ -27,7 +28,6 @@ int main()
     //make reverse polish notation
     int i = 0;
     int output_queue_cnt = 0;
-    int stack_cnt = 0;
     while (parsed_string[i].op != '\n') {
         switch (parsed_string[i].type) {
             case sym_digit:
@@ -35,13 +35,42 @@ int main()
                 output_queue_cnt++;
                 break;
             case sym_operator:
-                if (detect_symbol_priority(stack[stack_cnt-1].op) == normal) {
-                    output_queue[output_queue_cnt] = stack[stack_cnt-1];
-                    output_queue_cnt++;
-                    stack[stack_cnt-1] = parsed_string[i];
+                if (parsed_string[i].op == 's' ||
+                    parsed_string[i].op == 'c' ||
+                    parsed_string[i].op == 'e') {
+                    stack_push(&stack, parsed_string[i]);
+                    break;
+                }
+                
+                if (parsed_string[i].op == '(') {
+                    stack_push(&stack, parsed_string[i]);
+                    break;
+                }
+                
+                if (parsed_string[i].op == ')') {
+                    while (stack.contents[stack.top].op != '(') {
+                        output_queue[output_queue_cnt] = stack_pop(&stack);
+                        output_queue_cnt++;
+                    }
+                    stack_pop(&stack);
+                    
+                    if (stack.contents[stack.top].op == 's' ||
+                        stack.contents[stack.top].op == 'c' ||
+                        stack.contents[stack.top].op == 'e') {
+                        output_queue[output_queue_cnt] = stack_pop(&stack);
+                        output_queue[output_queue_cnt].type = sym_function;
+                        output_queue_cnt++;
+                    }
                 } else {
-                    stack[stack_cnt] = parsed_string[i];
-                    stack_cnt++;
+                    rpnData last_stack_element = stack_pop(&stack);
+                    if (detect_symbol_priority(last_stack_element.op) == normal) {
+                        output_queue[output_queue_cnt] = last_stack_element;
+                        output_queue_cnt++;
+                        stack_push(&stack, parsed_string[i]);
+                    } else {
+                        stack_push(&stack, last_stack_element);
+                        stack_push(&stack, parsed_string[i]);
+                    }
                 }
                 
             default:
@@ -50,10 +79,11 @@ int main()
         i++;
     }
     
-    for (int j = stack_cnt - 1; j >= 0; j--) {
-        output_queue[output_queue_cnt] = stack[j];
+    for (int j = stack.top; j > 0; j--) {
+        output_queue[output_queue_cnt] = stack_pop(&stack);
         output_queue_cnt++;
     }
+    
     output_queue[output_queue_cnt].op = '\n';
     output_queue[output_queue_cnt].type = sym_operator;
     
@@ -102,7 +132,35 @@ int main()
                     output_queue[p] = output_queue[p+2];
                     p++;
                 }
+                k = k-2;
                 output_queue[p].op = '\n';
+            } else if (output_queue[k].type == sym_function) {
+                double result = 0;
+                double a = output_queue[k-1].number;
+                
+                switch (output_queue[k].op) {
+                    case 's':
+                        result = sin(a);
+                        break;
+                    case 'c':
+                        result = cos(a);
+                        break;
+                    case 'e':
+                        result = exp(a);
+                        break;
+                        
+                    default:
+                        break;
+                }
+                output_queue[k-1].number = result;
+                
+                //replace array number with result
+                int tmp = k;
+                while (output_queue[tmp].op != '\n') {
+                    output_queue[tmp] = output_queue[tmp+1];
+                    tmp++;
+                }
+                k--;
             }
             k++;
         }

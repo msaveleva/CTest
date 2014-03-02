@@ -85,7 +85,7 @@ rpnData* parse_string(char *string)
     for (int i = 0; i <= (digit_string + operators_cnt); i++) {
         if (result_operators[op_cnt] == 's' || result_operators[op_cnt] == 'c' || result_operators[op_cnt] == 'e') {
             result_string[i].op = result_operators[op_cnt];
-            result_string[i].type = sym_function;
+            result_string[i].type = sym_operator;
             printf("%c", result_string[i].op);
             i++;
             op_cnt++;
@@ -104,6 +104,7 @@ rpnData* parse_string(char *string)
         
         if (result_operators[op_cnt] == ')') {
             result_string[i].op = result_operators[op_cnt];
+            result_string[i].type = sym_operator;
             printf("%c", result_string[i].op);
             i++;
             op_cnt++;
@@ -117,6 +118,7 @@ rpnData* parse_string(char *string)
         if (result_operators[op_cnt] == '(') {
             i++;
             result_string[i].op = result_operators[op_cnt];
+            result_string[i].type = sym_operator;
             printf("%c", result_string[i].op);
             op_cnt++;
         }
