@@ -77,9 +77,10 @@ rpnData* parse_string(char *string)
         double result = 0;
         sscanf(result_digits[i], "%lf", &result);
         result_numbers[i] = result;
-        printf("Parse result: %lf\n", result);
+//        printf("Parse result: %lf\n", result);
     }
     
+    printf("Parsed string:\n");
     int num_cnt = 0;
     int op_cnt = 0;
     for (int i = 0; i <= (digit_string + operators_cnt); i++) {
